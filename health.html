@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>The Economic Impact of COVID-19 on NYC's Workforce</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free-5.13.0-web/css/all.css" rel="stylesheet" type="text/css">
+  <link href="https://fontawesome.com/icons?d=gallery&q=covid-19&m=free">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://d3js.org/topojson.v2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="cases.js"></script>
+  <script src="income_pl.js"></script>
+
+  <!-- Page level custom scripts -->
+  <!--<script src="js/demo/chart-area-demo.js"></script>-->
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+
+        <div class="sidebar-brand-text mx-3">COVID 19 & NYC's Workforce <sup>2</sup></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link " href="index.html">
+          <i class="fas fa-viruses"></i></i>
+          <span class="text-gray-800">About Project</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-not-equal"></i>
+          <span class="text-gray-800" >The Divide</span>
+        </a>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-new py-2 collapse-inner rounded">
+            <a class="collapse-item text-white" href="income.html">Income Vulnerability</a>
+            <a class="collapse-item text-two" href="health.html">Health Risk Vulnerability</a>
+          </div>
+        </div>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwos" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-briefcase"></i>
+          <span class="text-gray-800" >Impact on Workforce</span>
+        </a>
+        <div id="collapseTwos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-new py-2 collapse-inner rounded">
+            <a class="collapse-item text-white" href="workforce.html">By Borough</a>
+            <a class="collapse-item text-white" href="unemp_ind_page.html">By Industry</a>
+          </div>
+        </div>
+      </li>
+      <hr class="sidebar-divider">
+      <!-- Nav Item - Utilities Collapse Menu -->
+      <li class="nav-item active">
+        <a class="nav-link " href="lookingahead.html">
+        <i class="fas fa-fast-forward"></i>
+          <span class="text-gray-800">Looking Ahead..</span></a>
+      </li>
+      <!-- Divider -->
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content" class="bg-new">
+
+        <!-- Topbar -->
+
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid bg-new">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h1 mb-0 text-gray-800"> Health Risk Across the Workforce </h1>
+
+          </div>
+          <!-- Content Row -->
+
+          <div class="row">
+            <div class="col-lg-5">
+            <div class="chart-area bg-new">
+          		<canvas id="IncomeChart" width=460 height=400></canvas>
+          	</div>
+          </div>
+          <div class="col-lg-7 mb-4 mt-0 ">
+
+            <!-- Illustrations -->
+            <div class="card shadow mb-4 bg-new mt-0">
+
+              <div class="card-body">
+
+                <h4 class="text-gray-800">Who was most at risk of contracting COVID?:</h2>
+                  <p class="small">
+                  Based on a similar analysis conducted by Politico, we look specifically at the health risks workers faced in NYC based on the physical proximity (x-axis) and median occupational wage (y-axis), with the bubbles sized by total people employed in that job. (Hover to see)<br><br>
+  Physical proximity - defined as distance to others as defined by O*NET<br>
+
+  Median Occupational Wage - median wage for NYC located occupation. Data from ACS <br><br>
+
+  The most <span class="text-red">dangerous</span> occupation, with the highest physical proximity score (99) are dental assistants, who make $35,392 and employ 105,702 workers.
+
+  The <span class="text-green">least</span> affected jobs: Lawyers, Personal Financial Advisors, and General and Operations Managers, scoring between 34-55 on physical proximity and making between $161K-$210K.
+
+</p>
+
+              </div>
+            </div>
+          </div>
+          </div>
+
+
+          <script>
+          Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+          Chart.defaults.global.defaultFontColor = '#858796';
+
+        var ctx = document.getElementById('IncomeChart');
+        var data1="https://gist.githubusercontent.com/ragini30/b4a09da429bd73ba1943b98130350f38/raw/8d74a240368a468fb7524a2c449424f7d856b70f/HealthRisk.csv"
+
+        d3.csv(data1).then(function(rows) {
+
+            var data = rows.map(function(row) {
+              return {
+                x: row['Physical Proximity'],
+                y: row['Median Occupational Wage'],
+                r: row['Jobs'] / 40000,
+                z: row['Occupational Title'],
+
+              }
+            })
+            var colorlist=rows.map(function(row){
+
+              if (row['y']<60000)
+                  c:"#fff"
+              else
+                  c:"#66FCF199"
+
+              return colorlist
+              })
+
+
+        var bubbleChartData = {
+                  datasets: [{ //backgroundColor:bg,
+                    borderColor:function(context){
+
+                      var index = context.dataIndex;
+                      var m=context.dataset.data[index].m;
+                      console.log(m)
+                      var value = context.dataset.data[index].y;
+                      var val2=context.dataset.data[index].x;
+
+                      return value < 60000 && val2>80 ? 'black' :
+                              '#b9fef9';
+                    },
+                                backgroundColor:function(context){
+                                  console.log(context)
+                                  var index = context.dataIndex;
+                                  var value = context.dataset.data[index].y;
+                                  var val2=context.dataset.data[index].x;
+
+                                  return value < 60000 && val2>80 ? '#f62a2a99' :
+                                          '#66FCF199';
+                                },
+
+                              data: data,
+                  }]
+                };
+        var myBubbleChart = Chart.Bubble(ctx, {
+            data: bubbleChartData,
+            options: {
+              responsive:false,
+              maintainAspectRatio: false,
+              layout: {
+                padding: {
+                  left: 10,
+                  right: 25,
+                  top: 5,
+                  bottom: 0
+                }},
+                legend:false,
+                scales: {
+                  xAxes: [{
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Physical Proximity"
+                    },
+                    gridLines: {
+                      display: true,
+                      borderDash: [8, 4],
+                      color:"#ffffff66",
+                      zeroLineColor:"#fff"
+                    },
+
+                  }],
+                  yAxes: [{
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Median Occupational Wage"
+                    },
+                    gridLines: {
+                      display: true,
+                      borderDash: [8, 4],
+                      color:"#ffffff66",
+                      zeroLineColor:"#fff"
+                    },
+                    ticks: {
+                      callback: function(value, index, values) {
+                        return  value.toLocaleString() + ' $';}
+                },
+
+                  }],
+                },
+                  tooltips: {
+                  displayColors: false,
+                  callbacks: {
+                    title: function(tooltipItem, all) {
+                      return [
+                        all.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index].z,
+                      ]
+                    },
+                    label: function(tooltipItem, all) {
+                      var r = all.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].r * 40000;
+                      return [
+                         'Physical Proximity: ' + tooltipItem.xLabel.toLocaleString() + ' ',
+                        'Median Wage' + ': ' + "$" + tooltipItem.yLabel.toLocaleString() + ' ',
+                        'Jobs: ' + r.toLocaleString() + ' '
+                      ]
+                  }
+                }
+              }
+            }
+          });
+
+        });
+        </script>
+
+
+          <div class="row">
+            <div class="mb-5">
+            <a href="workforce.html" class="btn btn-primary btn-circle">
+              <span class="icon text-gray-600">
+              <i class="fas fa-chevron-down mr-3 ml-3"></i>
+              </span>
+            </a></div>
+
+
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+
+
+  <!-- Page level custom scripts -->
+
+
+</body>
+
+</html>

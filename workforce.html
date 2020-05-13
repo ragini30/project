@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>The Economic Impact of COVID-19 on NYC's Workforce</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free-5.13.0-web/css/all.css" rel="stylesheet" type="text/css">
+  <link href="https://fontawesome.com/icons?d=gallery&q=covid-19&m=free">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://d3js.org/topojson.v2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="cases.js"></script>
+  <script src="income_pl.js"></script>
+  <script src="unemp_map_list.js"></script>
+
+  <!-- Page level custom scripts -->
+  <!--<script src="js/demo/chart-area-demo.js"></script>-->
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+
+        <div class="sidebar-brand-text mx-3">COVID 19 & NYC's Workforce <sup>2</sup></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link " href="index.html">
+          <i class="fas fa-viruses"></i></i>
+          <span class="text-gray-800">About Project</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-not-equal"></i>
+          <span class="text-gray-800" >The Divide</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-new py-2 collapse-inner rounded">
+            <a class="collapse-item text-white" href="income.html">Income Vulnerability</a>
+            <a class="collapse-item text-white" href="health.html">Health Risk Vulnerability</a>
+          </div>
+        </div>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+      <!-- <li class="nav-item active">
+        <a class="nav-link " href="workforce.html">
+          <i class="fas fa-briefcase"></i> -->
+          <li class="nav-item active">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwos" aria-expanded="true" aria-controls="collapseTwo">
+              <i class="fas fa-briefcase"></i>
+              <span class="text-gray-800" >Impact on Workforce</span>
+            </a>
+            <div id="collapseTwos" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+              <div class="bg-new py-2 collapse-inner rounded">
+                <a class="collapse-item text-two" href="workforce.html">By Borough</a>
+                <a class="collapse-item text-white" href="unemp_ind_page.html">By Industry</a>
+              </div>
+            </div>
+          </li>
+      <hr class="sidebar-divider">
+      <!-- Nav Item - Utilities Collapse Menu -->
+      <li class="nav-item active">
+        <a class="nav-link " href="lookingahead.html">
+        <i class="fas fa-fast-forward"></i>
+          <span class="text-gray-800">Looking Ahead..</span></a>
+      </li>
+      <!-- Divider -->
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content" class="bg-new">
+
+        <!-- Topbar -->
+
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid bg-new">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h1 mb-0 text-gray-800"> What Workers Were Most Affected? </h1>
+
+          </div>
+          <!-- Content Row -->
+          <div class="row">
+            <div id="sliderContainer" class="mb-1 ml-4">
+                 <input id="timeslide" class="slider" type="range" min="0" max="7" value="0" step="1"/><br>
+                 <span class="text-white" id="range">Last Year (March 28)
+                 </span><br>
+
+             </div>
+             <p class="text-gray-800 font-weight-bold small ml-4"> Event Timeline :
+             </p>
+             <p class="text-white small ml-1" id="range2">No COVID
+             </p>
+          </div>
+
+
+           <div class="row">
+
+            <div class="col-lg-5 bg-new" id='body1'>
+
+            </div>
+          <div class="col-lg-7 mb-4">
+            <div class="card shadow mb-4 bg-new">
+              <div class="card-header bg-new2">
+                <h4 class="text-gray-700 font-weight-bold"> What boroughs recorded the highest number of filed unemployment claims?</h4>
+
+              </div>
+
+              <div class="card-body">
+
+
+                <a href="#collapseCardExample" class="d-block card-header bg-new py-3 mb-4 border-bottom-" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                <h6 class="text-gray-800"> Total Unemployment Claims by Borough </h6>
+                </a>
+                  <div class="collapse" id="collapseCardExample">
+                <p class="text-white">State Unemployment. Between March 14 and April 18, over 1.4 million Americans in New York State filed for unemployment. Compared to a year ago, New York City has experienced 1,893% increase in the number of claims filed. </p>
+                <br></div>
+                <a href="#collapseCardExample2" class="d-block card-header bg-new mb-4 py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+
+                <h6 class="text-gray-800"> Weekly Unemployment Claims Analysis </h6></a>
+                  <div class="collapse" id="collapseCardExample2">
+                <p class="text-white"> As you slide the bar on the figure to the left, you can see how weekly unemployment claims change per week. Compared to March 28, 2019, weekly unemployment jumped from 5,200 filed claims to the 38,500 that were filed on March 28, 2020. </p>
+                  <p class="text-white"> The week of April 11th saw the highest number of filed weekly claims with an estimated 184,500 workers out of work. Queens and Brooklyn were the two boroughs in which the most displaced workers lived, with 66K and 53K reported claims in one week. In looking towards weekly unemployment claims, Brooklyn and Queens consistently have the most unemployment claims filed per week, with a peak between March 28 and April 11th </p>
+              </div>
+
+
+
+
+              </div>
+            </div>
+            <!-- Illustrations -->
+
+          </div>
+          </div>
+
+
+
+          <script>
+
+        var width = 560
+        var height = 350
+
+        var albersProjection=d3.geoAlbers()
+                            .scale(40000)
+                            .rotate([73.985880,0])
+                            .center([0,40.693943])
+                            .translate([width/4,height/2])
+
+        var path = d3.geoPath()
+                .projection(albersProjection)
+
+        var svg = d3.select("#body1")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+        // Global Variables
+        var inputValue = null;
+        var week = ["Last Year (March 28)","Week of March 21","Week of March 28","Week of April 4","Week of April 11","Week of April 18","Week of April 25","Week of May 2"];
+        var policy=["No COVID","Mar 16 - School close statewide","Mar 28 - CDC issues a 14-day domestic travel advisory for non-essential persons","April 4 - Gov. Andrew Cuomo announces that 113,704 people in New York State have tested +ve, and 3,565 people have died","April 11 -The tri-state accounts for nearly half of all cases in the United States","April 18 - New York residents required to wear face-coverings in public when they can't social distance", "April 25 - Governor Cuomo grants independent pharmacies testing privileges","May 2 - New York City subways announces MTA shut down for four hours each night"]
+            //2. Load the data: to create Boston neighborhood map
+            // var proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+            var newyork = "https://raw.githubusercontent.com/dwillis/nyc-maps/master/boroughs.geojson"
+            //
+             // "https://gist.githubusercontent.com/meitalhoffman/66e30998715a8940bae38e7f13497b2a/raw/625de0710e43b5f2974ef2f9a64fbb75dff4b3d9/NYBoroughBoundaries.topojson"
+            // "https://raw.githubusercontent.com/bsmithgall/bsmithgall.github.io/master/js/json/nyc-boroughs.topojson"
+
+            var weeklyclaims = 'https://raw.githubusercontent.com/snabahe/nyc-workforce/master/NYC%20Unemployment%20Updated.csv';
+            var date="https://raw.githubusercontent.com/snabahe/nyc-workforce/master/NYC%20Unemployment%20DateMatch.csv";
+            //
+
+            var unemployment = d3.map();
+
+            var promises = [
+                             d3.json(newyork),
+                             d3.csv(weeklyclaims, function(d) { unemployment.set(d.Borough, +d.Last_Year_March_28)})]
+
+            var x = d3.scaleLinear()
+                     .domain([0,200,1000,10000,20000,40000])
+                     .range([0,50,100,150,200,250]);
+
+                         var color = d3.scaleThreshold()
+                          //	.domain(d3.range(30,1861))
+                           .domain([0, 2000,10000, 40000,70000])
+                           // .range(["#AAFAF6","#91D6D2","#79B2AF","#618E8C","#486B69"]);
+                           .range(["#00847f","#70fffa","#a4fffc", "#ffa4a6", "#ff7074", "#d70005"]);
+
+
+            var g = svg.append("g")
+            .attr("class", "key")
+            .attr("transform", "translate(110,310)");
+
+            g.selectAll("rect")
+                .data(color.range().map(function(d) {
+                    d = color.invertExtent(d);
+                    if (d[0] == null) d[0] = x.domain()[0];
+                    if (d[1] == null) d[1] = x.domain()[1];
+                    console.log(d)
+                    return d;
+                }))
+                .enter().append("rect")
+                .attr("height", 8)
+                .attr("x", function(d,i) { return 50*i; })
+                .attr("y", 0)
+                .attr("width", function(d) { return 50; })
+                .attr("stroke","black")
+                .attr("fill", function(d) { return color(d[0]); });
+
+
+            g.append("text")
+                .attr("class", "caption")
+                .attr("x", x.range()[0])
+                .attr("y",25)
+                .attr("fill", "#fff")
+                .attr("text-anchor", "start")
+                .attr("font-style", "italic")
+                .attr("font-weight","bold")
+                .attr("font-family","Georgia, serif")
+                .attr("font-size",11)
+                .text("Unemployment claims by NYC borough");
+
+              console.log(color.range())
+               g.call(d3.axisTop(x)
+               .scale(x)
+               .tickSize(10)
+               .ticks()
+               .tickFormat(function(x, i) { return i ? x : x ; })
+               //.tickArguments([8]))
+               .tickValues(x.domain()))
+               .select(".domain")
+               .remove();
+
+      Promise.all(promises).then(ready)
+
+      function ready([newyork]) {
+
+      // console.log(newyork.features)
+      svg.append("g")
+         .selectAll("path")
+         .data(newyork.features)
+         // .data(topojson.feature(newyork, newyork.features.properties).features) //entering our data
+         .enter()
+         .append("path")
+         .attr("fill", function(d) {
+          console.log(d.properties.BoroName)
+           if (color(unemployment.get(d.properties.BoroName))==undefined)
+           return "white"
+           else
+           return color(unemployment.get(d.properties.BoroName)) })
+
+         .style("stroke","black") //REMOVE THIS LINE
+          .attr("d", path)
+        }
+
+      //time slide info
+        // when the input range changes update the value
+        d3.select("#timeslide").on("input", function() {
+
+            update(+this.value);
+        });
+        // update the fill of each SVG of class "incident" with value
+        function update(value) {
+            document.getElementById("range").innerHTML=week[value];
+            document.getElementById("range2").innerHTML=policy[value];
+            inputValue = week[value];
+            if (value==0)
+              week1('body1')
+            else if (value==1)
+              week2('body1')
+              else if (value==2)
+                week3('body1')
+                else if (value==3)
+                  week4('body1')
+                  else if (value==4)
+                    week5('body1')
+                    else if (value==5)
+                      week6('body1')
+                      else if (value==6)
+                        week7('body1')
+                        else if (value==7)
+                          week8('body1')
+                          else if (value==8)
+                            week8('body1')
+
+        }
+
+
+
+
+        // var data1="https://github.mit.edu/raw/ragini06/project/master/data1.csv?token=AABEbkN8H-H7kl_1OUuHGhY3ueYssO8Rks5evV_swA%3D%3D"
+        //
+        // d3.csv(data1).then(function(rows) {
+        //
+        //     var data = rows.map(function(row) {
+        //       return {
+        //         x: row['x'],
+        //         y: row['y'],
+        //         r: row['r'] / 10000,
+        //         z: row['ZIP'],
+        //
+        //       }
+        //     })
+        //     var colorlist=rows.map(function(row){
+        //
+        //       if (row['y']<60000)
+        //           c:"#fff"
+        //       else
+        //           c:"#66FCF199"
+        //
+        //       return colorlist
+        //       })
+        //
+        //
+        // var bubbleChartData = {
+        //           datasets: [{ //backgroundColor:bg,
+        //                         borderColor:'#b9fef9',
+        //                         backgroundColor:function(context){
+        //                           console.log(context)
+        //                           var index = context.dataIndex;
+        //                           var value = context.dataset.data[index].y;
+        //                           var val2=context.dataset.data[index].x;
+        //
+        //                           return value < 60000 && val2>700 ? '#ffffff99' :
+        //                                   '#66FCF199';
+        //                         },
+        //
+        //                       data: data,
+        //           }]
+        //         };
+        // var myBubbleChart = Chart.Bubble(ctx, {
+        //     data: bubbleChartData,
+        //     options: {
+        //       responsive:false,
+        //       maintainAspectRatio: false,
+        //       layout: {
+        //         padding: {
+        //           left: 10,
+        //           right: 25,
+        //           top: 5,
+        //           bottom: 0
+        //         }},
+        //         legend:false,
+        //         scales: {
+        //           xAxes: [{
+        //             scaleLabel: {
+        //               display: true,
+        //               labelString: "COVID Cases"
+        //             },
+        //             gridLines: {
+        //               display: true,
+        //               borderDash: [8, 4],
+        //               color:"#ffffff66",
+        //               zeroLineColor:"#fff"
+        //             },
+        //
+        //           }],
+        //           yAxes: [{
+        //             scaleLabel: {
+        //               display: true,
+        //               labelString: "Median Household Income"
+        //             },
+        //             gridLines: {
+        //               display: true,
+        //               borderDash: [8, 4],
+        //               color:"#ffffff66",
+        //               zeroLineColor:"#fff"
+        //             },
+        //             ticks: {
+        //               callback: function(value, index, values) {
+        //                 return  value.toLocaleString() + ' $';}
+        //         },
+        //
+        //           }],
+        //         },
+        //           tooltips: {
+        //           displayColors: false,
+        //           callbacks: {
+        //             title: function(tooltipItem, all) {
+        //               return [
+        //                 'ZIP Code '+all.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index].z,
+        //               ]
+        //             },
+        //             label: function(tooltipItem, all) {
+        //               var r = all.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].r * 10000;
+        //               return [
+        //                  'Cases: ' + tooltipItem.xLabel.toLocaleString() + ' ',
+        //                 'Median Household Income' + ': ' + "$" + tooltipItem.yLabel.toLocaleString() + ' ',
+        //                 'Population: ' + r.toLocaleString() + ' '
+        //               ]
+        //           }
+        //         }
+        //       }
+        //     }
+        //   });
+        //
+        // });
+        // </script>
+
+
+          <div class="row">
+            <div class="mb-5">
+            <a href="unemp_ind_page.html" class="btn btn-primary btn-circle">
+              <span class="icon text-gray-600">
+              <i class="fas fa-chevron-down mr-3 ml-3"></i>
+              </span>
+            </a></div>
+
+
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+
+
+  <!-- Page level custom scripts -->
+
+
+</body>
+
+</html>

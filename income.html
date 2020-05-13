@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>The Economic Impact of COVID-19 on NYC's Workforce</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free-5.13.0-web/css/all.css" rel="stylesheet" type="text/css">
+  <link href="https://fontawesome.com/icons?d=gallery&q=covid-19&m=free">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.css" rel="stylesheet">
+  <script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://d3js.org/topojson.v2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="cases.js"></script>
+  <script src="income_pl.js"></script>
+
+  <!-- Page level custom scripts -->
+  <!--<script src="js/demo/chart-area-demo.js"></script>-->
+</head>
+
+<body id="page-top bg-new">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+
+        <div class="sidebar-brand-text mx-3">COVID 19 & NYC's Workforce <sup>2</sup></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link " href="index.html">
+          <i class="fas fa-viruses"></i></i>
+          <span class="text-gray-800">About Project</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-not-equal"></i>
+          <span class="text-gray-800" >The Divide</span>
+        </a>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-new py-2 collapse-inner rounded">
+            <a class="collapse-item text-two" href="income.html">Income Vulnerability</a>
+            <a class="collapse-item text-white" href="health.html">Health Risk Vulnerability</a>
+          </div>
+        </div>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwos" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-briefcase"></i>
+          <span class="text-gray-800" >Impact on Workforce</span>
+        </a>
+        <div id="collapseTwos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-new py-2 collapse-inner rounded">
+            <a class="collapse-item text-white" href="workforce.html">By Borough</a>
+            <a class="collapse-item text-white" href="unemp_ind_page.html">By Industry</a>
+          </div>
+        </div>
+      </li>
+      <hr class="sidebar-divider">
+      <!-- Nav Item - Utilities Collapse Menu -->
+      <li class="nav-item active">
+        <a class="nav-link " href="lookingahead.html">
+        <i class="fas fa-fast-forward"></i>
+          <span class="text-gray-800">Looking Ahead..</span></a>
+      </li>
+      <!-- Divider -->
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content" class="bg-new">
+
+        <!-- Topbar -->
+
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid bg-new">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h1 mb-0 text-gray-800"> Income Inequality amidst COVID-19</h1>
+
+          </div>
+          <!-- Content Row -->
+          <div class="row">
+            <div class="col-lg-10 card shadow mb-4 bg-new ">
+            <div class="card-body small">
+              <p class="text-white mb-1">In the initial weeks of COVID-19, the number of Covid cases by zip codes correlated to median incomes reported. In order to show this, median income by zip code is first displayed below. Using the  “View Map By” you can see the number of Covid cases by neighborhood, showing how some of those living in zip codes with lower median incomes also experienced the most covid in the area. This is also illustrated in the bottom right chart showing covid cases v. median income by neighborhood before and after covid. This chart can be used to identify the most vulnerable communities on the basis of income - neighbourhoods with an income of less than 60000 $ and a high number of COVID cases are coloured in <span class="text-red"> red</span>.</p>
+            </div>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-2 mr-0">
+            <nav class="navbar navbar-expand navbar-light bg-nav b-new mb-2">
+
+              <ul class="navbar-nav ml-2">
+                <li class="nav-item dropdown">
+                  <a class="nav-link nav-padd dropdown-toggle text-gray-800" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    View Map By
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item text-gray-800" href="#" onClick="cases('body1')">COVID Cases</a>
+                      <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-gray-800" href="#" onClick="income_plot('body1')">Median Income</a>
+                    </div>
+                </li>
+              </ul>
+            </nav>  </div><br>
+
+            <button class="btn btn-primary bg-nav text-gray-800 mbut-4 " id="b1">Early Days</button>
+             <button class="btn btn-primary bg-nav text-gray-800 mbut-0" id="b2">Present Day</button>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-5 bg-new" id='body1'>
+            </div>
+            <div class="col-lg-5 bg-new">
+             <div class="chart-area bg-new">
+          		<canvas id="IncomeChart" width=500 height=400></canvas>
+          	 </div>
+           </div></div>
+           <div class="row mt-0">
+             <div class="mb-5">
+             <a href="health.html" class="btn btn-primary btn-circle">
+               <span class="icon text-gray-600">
+               <i class="fas fa-chevron-down mr-3 ml-3"></i>
+               </span>
+             </a>
+           </div></div>
+
+          <script>
+          Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+          Chart.defaults.global.defaultFontColor = '#858796';
+
+        var ctx = document.getElementById('IncomeChart');
+
+        var data1="https://gist.githubusercontent.com/ragini30/919d96e28908d306f961d1456144753f/raw/29b7b9bb464f48f35059d60c93a1776211d6545c/income_zip_nyc.csv"
+
+        d3.csv(data1).then(function(rows) {
+
+            var data1 = rows.map(function(row) {
+              return {
+                x: row['Total_cases'],
+                y: row['Median'],
+                r: row['Pop'] / 10000,
+                z: row['ZIP_code'],
+                m: 6000,
+
+              }
+            })
+            var data2 = rows.map(function(row) {
+              return {
+                x: row['Old_cases'],
+                y: row['Median'],
+                r: row['Pop'] / 10000,
+                z: row['ZIP_code'],
+                m: 1500,
+
+              }
+            })
+            var colorlist=rows.map(function(row){
+
+              if (row['y']<57782)
+                  c:"#fff"
+              else
+                  c:"#66FCF199"
+
+              return colorlist
+              })
+
+
+        var bubbleChartData = {
+                  datasets: [{ //backgroundColor:bg,
+                                borderColor:function(context){
+
+                                  var index = context.dataIndex;
+                                  var m=context.dataset.data[index].m;
+                                  console.log(m)
+                                  var value = context.dataset.data[index].y;
+                                  var val2=context.dataset.data[index].x;
+
+                                  return value < 60000 && val2>m ? 'black' :
+                                          '#b9fef9';
+                                },
+                                backgroundColor:function(context){
+
+                                  var index = context.dataIndex;
+                                  var m=context.dataset.data[index].m;
+                                  console.log(m)
+                                  var value = context.dataset.data[index].y;
+                                  var val2=context.dataset.data[index].x;
+
+                                  return value < 60000 && val2>m ? '#f62a2a99' :
+                                          '#66FCF199';
+                                },
+
+                              data: data1,
+                  }]
+                };
+
+
+        var myBubbleChart = Chart.Bubble(ctx, {
+            data: bubbleChartData,
+            options: {
+              responsive:false,
+              maintainAspectRatio: false,
+              layout: {
+                padding: {
+                  left: 10,
+                  right: 25,
+                  top: 5,
+                  bottom: 0
+                }},
+                legend:false,
+                scales: {
+                  xAxes: [{
+                    scaleLabel: {
+                      display: true,
+                      labelString: "COVID Cases"
+                    },
+                    gridLines: {
+                      display: true,
+                      borderDash: [8, 4],
+                      color:"#ffffff66",
+                      zeroLineColor:"#fff"
+                    },
+
+                  }],
+                  yAxes: [{
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Median Household Income"
+                    },
+                    gridLines: {
+                      display: true,
+                      borderDash: [8, 4],
+                      color:"#ffffff66",
+                      zeroLineColor:"#fff"
+                    },
+                    ticks: {
+                      callback: function(value, index, values) {
+                        return  value.toLocaleString() + ' $';}
+                },
+
+                  }],
+                },
+                  tooltips: {
+                  displayColors: false,
+                  callbacks: {
+                    title: function(tooltipItem, all) {
+                      return [
+                        'ZIP Code '+all.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index].z,
+                      ]
+                    },
+                    label: function(tooltipItem, all) {
+                      var r = all.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].r * 10000;
+                      return [
+                         'Cases: ' + tooltipItem.xLabel.toLocaleString() + ' ',
+                        'Median Household Income' + ': ' + "$" + tooltipItem.yLabel.toLocaleString() + ' ',
+                        'Population: ' + r.toLocaleString() + ' '
+                      ]
+                  }
+                }
+              }
+            }
+          });
+
+          $("#b1").on("click", function() {
+            myBubbleChart.config.data.datasets[0].data = data2;
+            myBubbleChart.update();
+            });
+          $("#b2").on("click", function() {
+            console.log(myBubbleChart.config.data.datasets[0].data)
+            myBubbleChart.config.data.datasets[0].data = data1;
+            myBubbleChart.update();
+            });
+
+        });
+
+          var width = 560,
+              height = 350;
+              var albersProjection=d3.geoAlbers()
+                                  .scale(40000)
+                                  .rotate([73.985880,0])
+                                  .center([0,40.693943])
+                                  .translate([width/4,height/2])
+          var path = d3.geoPath()
+                      .projection(albersProjection)
+
+          var svg = d3.select("#body1").append("svg")
+                      .attr("width", width)
+                      .attr("height", height);
+
+
+          var proxyUrl=''
+          var nyczipcode='https://gist.githubusercontent.com/ragini30/919d96e28908d306f961d1456144753f/raw/35e0c51c9a1a8b27af5699726dd816ffbba54559/ny_zip.json'
+          var nyc_income='https://gist.githubusercontent.com/ragini30/919d96e28908d306f961d1456144753f/raw/3d5f5dbd85c05f0db42f2f7ad0969329d36c440e/income_zip_nyc.csv'
+        //	var nyc_cases="covid_cases_zip.csv"
+          var covid = d3.map();
+          var promises = [
+                           d3.json(proxyUrl + nyczipcode),
+                           d3.csv(proxyUrl + nyc_income, function(d) { covid.set(d.ZIP_code, +d.Median) })]
+         var x = d3.scaleLinear()
+                   .domain([0,57782,250001])
+                   .range([0,50,100,150,200,250]);
+
+                       var color = d3.scaleThreshold()
+                        //	.domain(d3.range(30,1861))
+                            .domain([57782])
+                        // .domain([30000,50000,70000,90000])
+                          .range(["#aafaf6", "#51c0bc"])
+                         //.range(d3.schemeYlGnBu[4]);
+         var g = svg.append("g")
+                    .attr("class", "key")
+                    .attr("transform", "translate(130,310)");
+                    g.selectAll("rect")
+                        .data(color.range().map(function(d) {
+                            d = color.invertExtent(d);
+                            if (d[0] == null) d[0] = x.domain()[0];
+                            if (d[1] == null) d[1] = x.domain()[1];
+                            console.log(d)
+                            return d;
+                        }))
+                        .enter().append("rect")
+                        .attr("height", 8)
+                        .attr("x", function(d,i) { return 50*i; })
+                        .attr("y", 0)
+                        .attr("width", function(d) { return 50; })
+                        .attr("stroke","black")
+                        .attr("fill", function(d) { return color(d[0]); });
+
+
+                    g.append("text")
+                        .attr("class", "caption")
+                        .attr("x", x.range()[0])
+                        .attr("y",25)
+                        .attr("fill", "#fff")
+                        .attr("text-anchor", "start")
+                        .attr("font-style", "italic")
+                        .attr("font-weight","bold")
+                        .attr("font-family","Georgia, serif")
+                        .attr("font-size",11)
+                        .text("Median Income by Zipcode");
+
+
+                     console.log(color.range())
+                    g.call(d3.axisTop(x)
+                    .scale(x)
+                    .tickSize(5)
+                    .ticks()
+                    .tickFormat(function(x, i) { return i ? x : x + "$"; })
+                    //.tickArguments([8]))
+                    .tickValues(x.domain()))
+                    .select(".domain")
+                    .remove();
+
+        Promise.all(promises).then(ready)
+
+
+
+                 function ready([us]) {
+                   console.log(color(covid.get(10005)))
+                   console.log(us)
+                    svg.append("g")
+                        .selectAll("path")
+                        .data(us.features)
+                        .enter()
+                        .append("path")
+                        //.attr("stroke","#333")
+                        .attr("fill", function(d) { if (color(covid.get(+d.properties.postalCode))==undefined)
+                          return "black"
+                          else
+                          return color(covid.get(d.properties.postalCode)) })
+                        .style("stroke","black") //REMOVE THIS LINE
+                         .attr("d", path)
+                }
+
+          </script>
+
+
+
+          </div>
+
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+
+      <!-- End of Footer -->
+
+  </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+
+
+  <!-- Page level custom scripts -->
+
+
+</body>
+
+</html>

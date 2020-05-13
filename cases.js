@@ -1,0 +1,99 @@
+
+  // Our D3 code will go here.
+  function cases(elementID){
+document.getElementById(elementID).innerHTML = "";
+  var width = 560,
+      height = 350;
+      var albersProjection=d3.geoAlbers()
+                          .scale(40000)
+                          .rotate([73.985880,0])
+                          .center([0,40.693943])
+                          .translate([width/4,height/2])
+  var path = d3.geoPath()
+              .projection(albersProjection)
+  var svg = d3.select("#body1").append("svg")
+              .attr("width", width)
+              .attr("height", height);
+
+
+
+              var proxyUrl=''
+              var nyczipcode='https://gist.githubusercontent.com/ragini30/919d96e28908d306f961d1456144753f/raw/35e0c51c9a1a8b27af5699726dd816ffbba54559/ny_zip.json'
+              var nyc_cases='https://gist.githubusercontent.com/ragini30/919d96e28908d306f961d1456144753f/raw/0b3317f737211d3b6723ae7ff9187f0aa332698c/covid_cases.csv'
+  var covid = d3.map();
+  var promises = [
+                   d3.json(proxyUrl + nyczipcode),
+                   d3.csv(proxyUrl + nyc_cases, function(d) { covid.set(d.ZIP_code, +d.Total_cases) })]
+ var x = d3.scaleLinear()
+           .domain([0,100,500,1500,3000,5000])
+           .range([0,50,100,150,200,250]);
+
+               var color = d3.scaleThreshold()
+                //	.domain(d3.range(30,1861))
+                 .domain([100,500,1500,3000,5000])
+                 .range(d3.schemePuBuGn[6]);
+ var g = svg.append("g")
+            .attr("class", "key")
+            .attr("transform", "translate(100,310)");
+
+            g.selectAll("rect")
+                .data(color.range().map(function(d) {
+                    d = color.invertExtent(d);
+                    if (d[0] == null) d[0] = x.domain()[0];
+                    if (d[1] == null) d[1] = x.domain()[1];
+
+                    return d;
+                }))
+                .enter().append("rect")
+                .attr("height", 8)
+                .attr("x", function(d,i) { return 50*i; })
+                .attr("y", 0)
+                .attr("width", function(d) { return 50; })
+                .attr("stroke","black")
+                .attr("fill", function(d) { return color(d[0]); });
+
+
+            g.append("text")
+                .attr("class", "caption")
+                .attr("x", x.range()[0])
+                .attr("y",25)
+                .attr("fill", "#fff")
+                .attr("text-anchor", "start")
+                .attr("font-style", "italic")
+                .attr("font-weight","bold")
+                .attr("font-family","Georgia, serif")
+                .attr("font-size",11)
+                .text("Total COVID cases by Zipcode");
+
+
+             console.log(color.range())
+            g.call(d3.axisTop(x)
+            .scale(x)
+            .tickSize(5)
+            .ticks()
+            .tickFormat(function(x, i) { return i ? x : x ; })
+            //.tickArguments([8]))
+            .tickValues(x.domain()))
+            .select(".domain")
+            .remove();
+Promise.all(promises).then(ready)
+
+
+
+         function ready([us]) {
+           console.log(color(covid.get(10005)))
+           console.log(us)
+            svg.append("g")
+                .selectAll("path")
+                .data(us.features)
+                .enter()
+                .append("path")
+                //.attr("stroke","#333")
+                .attr("fill", function(d) { if (color(covid.get(+d.properties.postalCode))==undefined)
+                  return "black"
+                  else
+                  return color(covid.get(d.properties.postalCode)) })
+                .style("stroke","black") //REMOVE THIS LINE
+                 .attr("d", path)
+        }
+      }

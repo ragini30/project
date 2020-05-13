@@ -1,0 +1,140 @@
+<html lang="en">
+<head>
+	<title>Mapping with D3</title>
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <!--this doesn't seem to help-->
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+
+	<script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>
+<script src="vendor/chart.js/Chart.min.js"></script>
+<style>
+.bg-new{
+	  background-color: #1F2833 !important;
+}
+</style>
+
+</head>
+<body>
+	<!-- Page elements and content go here. -->
+
+	<div class="chart-area bg-new">
+		<canvas id="IncomeChart" width=500 height=400></canvas>
+	</div>
+
+
+</div>
+
+	<script>
+	Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+	Chart.defaults.global.defaultFontColor = '#858796';
+
+var ctx = document.getElementById('IncomeChart');
+var data1="https://github.mit.edu/raw/ragini06/project/master/data1.csv?token=AABEbkN8H-H7kl_1OUuHGhY3ueYssO8Rks5evV_swA%3D%3D"
+
+d3.csv(data1).then(function(rows) {
+
+    var data = rows.map(function(row) {
+      return {
+        x: row['x'],
+        y: row['y'],
+        r: row['r'] / 10000,
+				z: row['ZIP'],
+
+      }
+    })
+		var colorlist=rows.map(function(row){
+
+			if (row['y']<60000)
+					c:"#fff"
+			else
+					c:"#66FCF199"
+
+			return colorlist
+			})
+
+
+var bubbleChartData = {
+					datasets: [{ //backgroundColor:bg,
+												borderColor:'#b9fef9',
+												backgroundColor:function(context){
+													console.log(context)
+													var index = context.dataIndex;
+													var value = context.dataset.data[index].y;
+													var val2=context.dataset.data[index].x;
+
+                    			return value < 60000 && val2>700 ? '#ffffff99' :
+																	'#66FCF199';
+												},
+
+							        data: data,
+					}]
+		    };
+var myBubbleChart = Chart.Bubble(ctx, {
+    data: bubbleChartData,
+		options: {
+			responsive:false,
+			maintainAspectRatio: false,
+			layout: {
+				padding: {
+					left: 10,
+					right: 25,
+					top: 25,
+					bottom: 0
+				}},
+				legend:false,
+				scales: {
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: "COVID Cases"
+            },
+            gridLines: {
+              display: true,
+							borderDash: [8, 4],
+							color:"#ffffff66",
+							zeroLineColor:"#fff"
+            },
+
+          }],
+					yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: "Median Household Income"
+            },
+            gridLines: {
+              display: true,
+							borderDash: [8, 4],
+							color:"#ffffff66",
+							zeroLineColor:"#fff"
+            },
+
+          }],
+				},
+					tooltips: {
+          displayColors: false,
+          callbacks: {
+            title: function(tooltipItem, all) {
+              return [
+                'ZIP Code '+all.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index].z,
+              ]
+            },
+            label: function(tooltipItem, all) {
+              var r = all.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].r * 10000;
+              return [
+                 'Cases: ' + tooltipItem.xLabel.toLocaleString() + ' ',
+                'Median Household Income' + ': ' + "$" + tooltipItem.yLabel.toLocaleString() + ' ',
+                'Population: ' + r.toLocaleString() + ' '
+              ]
+          }
+        }
+			}
+		}
+	});
+
+});
+
+</script>
+</body>
